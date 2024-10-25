@@ -11,7 +11,7 @@ namespace Desafio.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AutorController : Controller
+    public class AutorController : ControllerBase
     {
         private readonly ICommandBus _commandBus;
         private readonly IQueryFacadeAutor _queries;
@@ -22,6 +22,20 @@ namespace Desafio.API.Controllers
         {
             _commandBus = commandBus;
             _queries = (IQueryFacadeAutor)queries;
+        }
+
+        /// <summary>
+        /// Recuperar todos os autores de livro
+        /// </summary>        
+        /// <response code="200">Registro recuperado com sucesso.</response>        
+        /// <response code="404">Dados recupetado com sucesso.</response>
+        [HttpGet("todos")]
+        [ProducesResponseType(typeof(IEnumerable<AutorViewModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> All()
+        {
+            var result = await _queries.ListAsync(new CancellationToken());
+            return Ok(result);
         }
 
         /// <summary>

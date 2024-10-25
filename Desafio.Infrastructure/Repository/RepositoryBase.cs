@@ -28,13 +28,21 @@ namespace Desafio.Infrastructure.Repository
             return entity;
         }
 
-        public async Task<TEntidade> FindOneAsync(
+        public async Task<TEntidade> FirstAsync(
             Expression<Func<TEntidade, bool>> filter, 
             CancellationToken cancellationToken = default)
         {
             IQueryable<TEntidade> query = Context.Set<TEntidade>();
             return await query.SingleOrDefaultAsync(filter, cancellationToken);
-        }        
+        }
+
+        public async Task<IEnumerable<TEntidade>> ListAsync(
+            Expression<Func<TEntidade, bool>> filter, 
+            CancellationToken cancellationToken = default)
+        {
+            IQueryable<TEntidade> query = Context.Set<TEntidade>().Where(filter);
+            return await query.ToListAsync(cancellationToken);
+        }
 
         public Task<TEntidade> UpdateAsync(TEntidade entidade, CancellationToken cancellationToken = default)
         {

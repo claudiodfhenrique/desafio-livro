@@ -8,5 +8,7 @@ namespace Desafio.Infrastructure.Queries.Interfaces
             Expression<Func<TDocument, bool>> filter,
             CancellationToken cancellationToken = default
         );
+
+        Task<IEnumerable<TDocument>> ListAsync(Expression<Func<TDocument, bool>> filter, CancellationToken cancellationToken = default);
     }
 }

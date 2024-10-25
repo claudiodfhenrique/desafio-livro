@@ -20,7 +20,7 @@ namespace Desafio.Application.Commands.Assuntos.CommandsHandlers
 
         public async Task<CommandResult> Handle(UpdateAssuntoCommand request, CancellationToken cancellationToken)
         {
-            var assunto = await _repository.FindOneAsync(f => f.CodAss == request.Id, cancellationToken);
+            var assunto = await _repository.FirstAsync(f => f.CodAss == request.Id, cancellationToken);
             if (assunto is null)
                 return CommandResult.CompletedError(request.Id);
 

@@ -13,7 +13,7 @@ namespace Desafio.Infrastructure.Config
             builder.Property(x => x.Nome)
                 .HasColumnType("VARCHAR(100)")
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(100);           
 
             base.Configure(builder);
         }

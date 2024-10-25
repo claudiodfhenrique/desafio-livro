@@ -8,7 +8,12 @@ namespace Desafio.Infrastructure.Repository.Interfaces
         
         Task<TEntidade> CreateAsync(TEntidade entity, CancellationToken cancellationToken = default);
         
-        Task<TEntidade> FindOneAsync(
+        Task<TEntidade> FirstAsync(
+            Expression<Func<TEntidade, bool>> filter, 
+            CancellationToken cancellationToken = default
+        );
+
+        Task<IEnumerable<TEntidade>> ListAsync(
             Expression<Func<TEntidade, bool>> filter, 
             CancellationToken cancellationToken = default
         );

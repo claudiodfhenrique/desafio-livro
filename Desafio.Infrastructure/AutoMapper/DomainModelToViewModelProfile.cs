@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Desafio.Domain.Entities;
+using Desafio.Domain.Views;
 using Desafio.Infrastructure.Queries.ViewModel;
 
 namespace Desafio.Infrastructure.AutoMapper
@@ -13,6 +14,10 @@ namespace Desafio.Infrastructure.AutoMapper
 
             CreateMap<Autor, AutorViewModel>()
                 .ReverseMap();
+
+            CreateMap<Livro, LivroViewModel>();
+
+            CreateMap<VwLivrosPorAutor, VwLivrosPorAutorViewModel>();
         }
     }
 }

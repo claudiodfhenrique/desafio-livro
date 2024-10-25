@@ -1,67 +1,54 @@
-using Desafio.Infrastructure.CommandBus;
-using Desafio.Application.Commands.Assuntos.Commands;
+Ôªøusing Desafio.Application.Commands.Autores.Commands;
+using Desafio.Application.Commands.Livros.Commands;
 using Desafio.Domain.Entities;
+using Desafio.Infrastructure.CommandBus;
 using Desafio.Infrastructure.Queries.Interfaces;
+using Desafio.Infrastructure.Queries.ViewModel;
 using Desafio.Infrastructure.Util;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using Desafio.Infrastructure.Queries.ViewModel;
 
 namespace Desafio.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AssuntoController : ControllerBase
-    { 
-        private readonly ICommandBus _commandBus; 
-        private readonly IQueryFacadeAssunto _queries;
+    public class LivroController : ControllerBase
+    {
+        private readonly ICommandBus _commandBus;
+        private readonly IQueryFacadeLivro _queries;
 
-        public AssuntoController(
-            ICommandBus commandBus, 
-            IQueryFacade<Assunto> queries)
+        public LivroController(
+            ICommandBus commandBus,
+            IQueryFacade<Livro> queries)
         {
-            _commandBus = commandBus;
-            _queries = (IQueryFacadeAssunto)queries;
+            _commandBus = commandBus;            
+            _queries = (IQueryFacadeLivro)queries;
         }
 
         /// <summary>
-        /// Recuperar todos os assuntos dos livros
-        /// </summary>        
-        /// <response code="200">Registro recuperado com sucesso.</response>        
-        /// <response code="404">Dados recupetado com sucesso.</response>
-        [HttpGet("todos")]
-        [ProducesResponseType(typeof(IEnumerable<AssuntoViewModel>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> All()
-        {
-            var result = await _queries.ListAsync(new CancellationToken());
-            return Ok(result);
-        }
-
-        /// <summary>
-        /// Excluir assunto do livro
+        /// Excluir livro
         /// </summary>
         /// <param name="id">Identificador do assunto</param>
-        /// <response code="200">Exclus„o realizada com sucesso.</response>        
-        /// <response code="400">Dados informados est„o incorretos.</response>
-        /// <response code="500">Oops! N„o foi possÌvel realizar a operaÁ„o.</response>
+        /// <response code="200">Exclus√£o realizada com sucesso.</response>        
+        /// <response code="400">Dados informados est√£o incorretos.</response>
+        /// <response code="500">Oops! N√£o foi poss√≠vel realizar a opera√ß√£o.</response>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Result<>), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _commandBus.Send(new DeleteAssuntoCommand(id), new CancellationToken());
+            var result = await _commandBus.Send(new DeleteLivroCommand(id), new CancellationToken());
             if (!result.Success)
                 return BadRequest();
 
-            return Ok(result.Id);   
+            return Ok(result.Id);
         }
 
         /// <summary>
-        /// Recuperar o assunto do livro
+        /// Recuperar o livro
         /// </summary>
-        /// <param name="id">Identificador do assunto</param>
+        /// <param name="id">Identificador do livro</param>
         /// <response code="200">Registro recuperado com sucesso.</response>        
         /// <response code="404">Dados recupetado com sucesso.</response>
         [HttpGet("{id}")]
@@ -74,17 +61,17 @@ namespace Desafio.API.Controllers
         }
 
         /// <summary>
-        /// Cadastrar assunto do livro
+        /// Cadastrar livro
         /// </summary>
         /// <param name="command">Dados de cadastro</param>
         /// <response code="200">Cadastro realizado com sucesso.</response>        
-        /// <response code="400">Dados informados est„o incorretos.</response>
-        /// <response code="500">Oops! N„o foi possÌvel realizar a operaÁ„o.</response>
+        /// <response code="400">Dados informados est√£o incorretos.</response>
+        /// <response code="500">Oops! N√£o foi poss√≠vel realizar a opera√ß√£o.</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Result<>), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Post([FromBody, Required] CreateAssuntoCommand command)
+        public async Task<IActionResult> Post([FromBody, Required] CreateLivroCommand command)
         {
             var result = await _commandBus.Send(command, new CancellationToken());
             if (!result.Success)
@@ -94,17 +81,31 @@ namespace Desafio.API.Controllers
         }
 
         /// <summary>
-        /// Atualizar assunto do livro
+        /// Recuperar todos os livros
+        /// </summary>        
+        /// <response code="200">Registro recuperado com sucesso.</response>        
+        /// <response code="404">Dados recupetado com sucesso.</response>
+        [HttpGet("todos")]
+        [ProducesResponseType(typeof(IEnumerable<LivroViewModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> All()
+        {
+            var result = await _queries.ListAsync(new CancellationToken());
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Atualizar livro
         /// </summary>
-        /// <param name="command">Dados de atualizaÁ„o</param>
-        /// <response code="200">AtualizaÁ„o realizada com sucesso.</response>        
-        /// <response code="400">Dados informados est„o incorretos.</response>
-        /// <response code="500">Oops! N„o foi possÌvel realizar a operaÁ„o.</response>
+        /// <param name="command">Dados de atualiza√ß√£o</param>
+        /// <response code="200">Atualiza√ß√£o realizada com sucesso.</response>        
+        /// <response code="400">Dados informados est√£o incorretos.</response>
+        /// <response code="500">Oops! N√£o foi poss√≠vel realizar a opera√ß√£o.</response>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Result<>), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Put([FromBody, Required] UpdateAssuntoCommand command)
+        public async Task<IActionResult> Put([FromBody, Required] UpdateLivroCommand command)
         {
             var result = await _commandBus.Send(command, new CancellationToken());
             if (!result.Success)

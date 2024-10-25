@@ -22,5 +22,12 @@ namespace Desafio.Infrastructure.Queries
         {
             return await _context.Set<TDocument>().FirstOrDefaultAsync(filter, cancellationToken);
         }
+
+        public async Task<IEnumerable<TDocument>> ListAsync(
+            Expression<Func<TDocument, bool>> filter,
+            CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<TDocument>().Where(filter).ToListAsync(cancellationToken);
+        }
     }
 }
