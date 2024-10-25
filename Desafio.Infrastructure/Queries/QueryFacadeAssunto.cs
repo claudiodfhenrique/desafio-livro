@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Desafio.Application.Queries.Assuntos.ViewModel;
 using Desafio.Domain.Entities;
 using Desafio.Infrastructure.Context;
 using Desafio.Infrastructure.Queries.Interfaces;
+using Desafio.Infrastructure.Queries.ViewModel;
 
 namespace Desafio.Infrastructure.Queries
 {

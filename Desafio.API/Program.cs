@@ -58,8 +58,10 @@ builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 builder.Services.AddScoped<ICommandBus, CommandBus>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
 builder.Services.AddScoped<IAssuntoRepository, AssuntoRepository>();
+builder.Services.AddScoped<IAutorRepository, AutorRepository>();
 builder.Services.AddScoped(typeof(IQueryFacade<>), typeof(QueryFacade<>));
 builder.Services.AddScoped<IQueryFacade<Assunto>, QueryFacadeAssunto>();
+builder.Services.AddScoped<IQueryFacade<Autor>, QueryFacadeAutor>();
 builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(DomainModelToViewModelProfile)));
 
 builder.Services.AddMediatR(cfg =>

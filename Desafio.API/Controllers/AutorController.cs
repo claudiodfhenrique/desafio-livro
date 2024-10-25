@@ -1,43 +1,43 @@
-using Desafio.Infrastructure.CommandBus;
-using Desafio.Application.Commands.Assuntos.Commands;
+Ôªøusing Desafio.Application.Commands.Autores.Commands;
 using Desafio.Domain.Entities;
+using Desafio.Infrastructure.CommandBus;
 using Desafio.Infrastructure.Queries.Interfaces;
+using Desafio.Infrastructure.Queries.ViewModel;
 using Desafio.Infrastructure.Util;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using Desafio.Infrastructure.Queries.ViewModel;
 
 namespace Desafio.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AssuntoController : ControllerBase
-    { 
-        private readonly ICommandBus _commandBus; 
-        private readonly IQueryFacadeAssunto _queries;
+    public class AutorController : Controller
+    {
+        private readonly ICommandBus _commandBus;
+        private readonly IQueryFacadeAutor _queries;
 
-        public AssuntoController(
-            ICommandBus commandBus, 
-            IQueryFacade<Assunto> queries)
+        public AutorController(
+            ICommandBus commandBus,
+            IQueryFacade<Autor> queries)
         {
             _commandBus = commandBus;
-            _queries = (IQueryFacadeAssunto)queries;
+            _queries = (IQueryFacadeAutor)queries;
         }
 
         /// <summary>
-        /// Excluir assunto do livro
+        /// Excluir autor do livro
         /// </summary>
         /// <param name="id">Identificador do assunto</param>
-        /// <response code="200">Exclus„o realizada com sucesso.</response>        
-        /// <response code="400">Dados informados est„o incorretos.</response>
-        /// <response code="500">Oops! N„o foi possÌvel realizar a operaÁ„o.</response>
+        /// <response code="200">Exclus√£o realizada com sucesso.</response>        
+        /// <response code="400">Dados informados est√£o incorretos.</response>
+        /// <response code="500">Oops! N√£o foi poss√≠vel realizar a opera√ß√£o.</response>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Result<>), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _commandBus.Send(new DeleteAssuntoCommand(id), new CancellationToken());
+            var result = await _commandBus.Send(new DeleteAutorCommand(id), new CancellationToken());
             if (!result.Success)
                 return BadRequest();
 
@@ -45,13 +45,13 @@ namespace Desafio.API.Controllers
         }
 
         /// <summary>
-        /// Recuperar o assunto do livro
+        /// Recuperar o autor do livro
         /// </summary>
-        /// <param name="id">Identificador do assunto</param>
+        /// <param name="id">Identificador do autor</param>
         /// <response code="200">Registro recuperado com sucesso.</response>        
         /// <response code="404">Dados recupetado com sucesso.</response>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(AssuntoViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(AutorViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(int id)
         {
@@ -60,17 +60,17 @@ namespace Desafio.API.Controllers
         }
 
         /// <summary>
-        /// Cadastrar assunto do livro
+        /// Cadastrar auto do livro
         /// </summary>
         /// <param name="command">Dados de cadastro</param>
         /// <response code="200">Cadastro realizado com sucesso.</response>        
-        /// <response code="400">Dados informados est„o incorretos.</response>
-        /// <response code="500">Oops! N„o foi possÌvel realizar a operaÁ„o.</response>
+        /// <response code="400">Dados informados est√£o incorretos.</response>
+        /// <response code="500">Oops! N√£o foi poss√≠vel realizar a opera√ß√£o.</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Result<>), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Post([FromBody, Required] CreateAssuntoCommand command)
+        public async Task<IActionResult> Post([FromBody, Required] CreateAutorCommand command)
         {
             var result = await _commandBus.Send(command, new CancellationToken());
             if (!result.Success)
@@ -80,17 +80,17 @@ namespace Desafio.API.Controllers
         }
 
         /// <summary>
-        /// Atualizar assunto do livro
+        /// Atualizar autor do livro
         /// </summary>
-        /// <param name="command">Dados de atualizaÁ„o</param>
-        /// <response code="200">AtualizaÁ„o realizada com sucesso.</response>        
-        /// <response code="400">Dados informados est„o incorretos.</response>
-        /// <response code="500">Oops! N„o foi possÌvel realizar a operaÁ„o.</response>
+        /// <param name="command">Dados de atualiza√ß√£o</param>
+        /// <response code="200">Atualiza√ß√£o realizada com sucesso.</response>        
+        /// <response code="400">Dados informados est√£o incorretos.</response>
+        /// <response code="500">Oops! N√£o foi poss√≠vel realizar a opera√ß√£o.</response>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Result<>), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Put([FromBody, Required] UpdateAssuntoCommand command)
+        public async Task<IActionResult> Put([FromBody, Required] UpdateAutorCommand command)
         {
             var result = await _commandBus.Send(command, new CancellationToken());
             if (!result.Success)

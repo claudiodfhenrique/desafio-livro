@@ -4,9 +4,9 @@ namespace Desafio.Application.Commands.Assuntos.Commands
 {
     public class DeleteAssuntoCommand : ICommand
     {
-        public long Id { get; init; }
+        public int Id { get; init; }
 
-        public DeleteAssuntoCommand(long id)
+        public DeleteAssuntoCommand(int id)
         {
             Id = id;
         }

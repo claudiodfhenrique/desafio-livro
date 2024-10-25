@@ -12,11 +12,13 @@ namespace Desafio.Infrastructure.Context
         }
 
         public DbSet<Assunto> Assunto { get; set; }
+        public DbSet<Autor> Autor { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new AssuntoConfig());
+            builder.ApplyConfiguration(new AutorConfig());
         }
 
 

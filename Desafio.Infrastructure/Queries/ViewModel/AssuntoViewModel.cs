@@ -1,4 +1,4 @@
-﻿namespace Desafio.Application.Queries.Assuntos.ViewModel
+﻿namespace Desafio.Infrastructure.Queries.ViewModel
 {
     public readonly struct AssuntoViewModel
     {

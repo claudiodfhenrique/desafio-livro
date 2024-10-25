@@ -1,5 +1,5 @@
-﻿using Desafio.Application.Queries.Assuntos.ViewModel;
-using Desafio.Domain.Entities;
+﻿using Desafio.Domain.Entities;
+using Desafio.Infrastructure.Queries.ViewModel;
 
 namespace Desafio.Infrastructure.Queries.Interfaces
 {

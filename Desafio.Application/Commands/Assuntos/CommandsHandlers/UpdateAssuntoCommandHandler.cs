@@ -28,7 +28,7 @@ namespace Desafio.Application.Commands.Assuntos.CommandsHandlers
             await _repository.UpdateAsync(assunto, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            return CommandResult.CompletedSuccess();
+            return CommandResult.CompletedSuccess(request.Id);
         }
     }
 }

@@ -23,9 +23,9 @@ namespace Desafio.Infrastructure.CommandBus
         [JsonIgnore]
         public bool Success { get; init; }
 
-        public static CommandResult CompletedSuccess()
+        public static CommandResult CompletedSuccess(int id)
         {
-            return new CommandResult(Guid.Empty, true);
+            return new CommandResult(id, true);
         }
 
         public static CommandResult CompletedError(long id)
