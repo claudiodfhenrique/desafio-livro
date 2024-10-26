@@ -10,16 +10,16 @@ namespace Desafio.Application.Commands.Livros.CommandsHandles
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILivroRepository _repository;
-        private readonly IAssuntoRepository _assuntoRepository;
+        private readonly ILivroAutorRepository _livroAutorRepository;
 
         public CreateLivroCommandHandler(
             IUnitOfWork unitOfWork,
             ILivroRepository repository,
-            IAssuntoRepository assuntoRepository)
+            ILivroAutorRepository livroAutorRepository)
         {
             _unitOfWork = unitOfWork;
             _repository = repository;
-            _assuntoRepository = assuntoRepository;
+            _livroAutorRepository = livroAutorRepository;
         }
 
         public async Task<CommandResult> Handle(CreateLivroCommand request, CancellationToken cancellationToken)
@@ -32,10 +32,33 @@ namespace Desafio.Application.Commands.Livros.CommandsHandles
                 AnoPublicacao = request.AnoPublicacao
             };
 
-            await _repository.CreateAsync(livro, cancellationToken);
-            await _unitOfWork.CommitAsync(cancellationToken);
+            await _unitOfWork.BeginTransactionAsync(cancellationToken);
+            try
+            {
+                await _repository.CreateAsync(livro, cancellationToken);
+                await _unitOfWork.CommitAsync(cancellationToken);
 
-            return CommandResult.CompletedSuccess(livro.Cod);
+                if (request.LivroAutores is not null && request.LivroAutores.Any()) 
+                {
+                    foreach (var autorId in request.LivroAutores)
+                        await _livroAutorRepository.CreateAsync(new LivroAutor
+                        {
+                            LivroCod = livro.Cod,
+                            AutorCodAu = autorId
+                        }, cancellationToken);
+
+                    await _unitOfWork.CommitAsync(cancellationToken);
+                }
+
+                await _unitOfWork.CommitTransactionAsync(cancellationToken);
+
+                return CommandResult.CompletedSuccess(livro.Cod);
+            }
+            catch
+            {
+                await _unitOfWork.RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
         }
     }
 }

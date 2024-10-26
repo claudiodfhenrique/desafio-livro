@@ -18,9 +18,8 @@ namespace Desafio.Infrastructure.Config
                 .HasColumnType("VARCHAR(100)")
                 .IsRequired()
                 .HasMaxLength(100);
-            
-            builder.HasMany(x => x.LivroAssunto)
-                .WithMany(x => x.LivroAssunto);            
+
+            builder.HasMany(x => x.LivroAutor);            
 
             base.Configure(builder);
         }

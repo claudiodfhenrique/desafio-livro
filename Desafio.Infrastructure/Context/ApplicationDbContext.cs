@@ -3,6 +3,7 @@ using Desafio.Domain.Views;
 using Desafio.Infrastructure.Config;
 using Desafio.Infrastructure.Context.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Desafio.Infrastructure.Context
 {
@@ -15,6 +16,7 @@ namespace Desafio.Infrastructure.Context
         public DbSet<Assunto> Assunto { get; set; }
         public DbSet<Autor> Autor { get; set; }
         public DbSet<Livro> Livro { get; set; }
+        public DbSet<LivroAutor> LivroAutor { get; set; }
         public DbSet<VwLivrosPorAutor> VWBoletosVencimentoAnual { get; set; }
 
 
@@ -24,12 +26,12 @@ namespace Desafio.Infrastructure.Context
             builder.ApplyConfiguration(new AssuntoConfig());
             builder.ApplyConfiguration(new AutorConfig());
             builder.ApplyConfiguration(new LivroConfig());
+            builder.ApplyConfiguration(new LivroAutorConfig());
 
             builder.Entity<VwLivrosPorAutor>()
                 .ToView("VW_LIVROS_POR_AUTOR")
                 .HasKey(t => t.Id);
         }
-
 
         public Task CommitAsync(CancellationToken cancellationToken = default)
         {
@@ -37,6 +39,21 @@ namespace Desafio.Infrastructure.Context
         }
 
         public string GetConnectionString()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task CommitTransactionAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RollbackTransactionAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

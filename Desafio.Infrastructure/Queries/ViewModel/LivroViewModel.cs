@@ -7,7 +7,7 @@
         public string Editora { get; init; }
         public int Edicao { get; init; }
         public int AnoPublicacao { get; init; }
-        public IEnumerable<AssuntoViewModel> Assuntos { get; init; }
-        public IEnumerable<AutorViewModel> Autores { get; init; }
+        //public IEnumerable<AssuntoViewModel> Assuntos { get; init; }
+        public IEnumerable<LivroAutorViewModel> LivroAutor { get; init; }
     }
 }

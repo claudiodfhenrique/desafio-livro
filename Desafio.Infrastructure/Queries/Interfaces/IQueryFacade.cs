@@ -2,7 +2,7 @@
 
 namespace Desafio.Infrastructure.Queries.Interfaces
 {
-    public interface IQueryFacade<TDocument>
+    public interface IQueryFacade<TDocument> : IQueryFacadeOptions
     {
         Task<TDocument> FirstAsync(
             Expression<Func<TDocument, bool>> filter,

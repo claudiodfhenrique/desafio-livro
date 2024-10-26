@@ -26,6 +26,11 @@ namespace Desafio.Infrastructure.Queries
 
         public async Task<IEnumerable<LivroViewModel>> ListAsync(CancellationToken cancellationToken = default)
         {
+            InsertNavigations(
+                nameof(Livro.LivroAutor),
+                $"{nameof(Livro.LivroAutor)}.{nameof(Autor)}"
+            );
+
             var queryResult = await ListAsync(_ => true, cancellationToken);
             return _mapper.Map<IList<LivroViewModel>>(queryResult);
         }
