@@ -11,6 +11,7 @@ namespace Desafio.Application.Commands.Livros.CommandsHandles
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILivroRepository _repository;
         private readonly ILivroAutorRepository _livroAutorRepository;
+        private readonly ILivroAssuntoRepository _livroAssuntoRepository;
 
         public CreateLivroCommandHandler(
             IUnitOfWork unitOfWork,
@@ -38,18 +39,8 @@ namespace Desafio.Application.Commands.Livros.CommandsHandles
                 await _repository.CreateAsync(livro, cancellationToken);
                 await _unitOfWork.CommitAsync(cancellationToken);
 
-                if (request.LivroAutores is not null && request.LivroAutores.Any()) 
-                {
-                    foreach (var autorId in request.LivroAutores)
-                        await _livroAutorRepository.CreateAsync(new LivroAutor
-                        {
-                            LivroCod = livro.Cod,
-                            AutorCodAu = autorId
-                        }, cancellationToken);
-
-                    await _unitOfWork.CommitAsync(cancellationToken);
-                }
-
+                await CreateAutoresAsync(livro, request, cancellationToken);
+                await CreateAssuntosAsync(livro, request, cancellationToken);
                 await _unitOfWork.CommitTransactionAsync(cancellationToken);
 
                 return CommandResult.CompletedSuccess(livro.Cod);
@@ -58,6 +49,42 @@ namespace Desafio.Application.Commands.Livros.CommandsHandles
             {
                 await _unitOfWork.RollbackTransactionAsync(cancellationToken);
                 throw;
+            }
+        }
+
+        private async Task CreateAutoresAsync(
+            Livro livro,
+            CreateLivroCommand request, 
+            CancellationToken cancellationToken)
+        {
+            if (request.LivroAutores is not null && request.LivroAutores.Any())
+            {
+                foreach (var autorId in request.LivroAutores)
+                    await _livroAutorRepository.CreateAsync(new LivroAutor
+                    {
+                        LivroCod = livro.Cod,
+                        AutorCodAu = autorId
+                    }, cancellationToken);
+
+                await _unitOfWork.CommitAsync(cancellationToken);
+            }
+        }
+
+        private async Task CreateAssuntosAsync(
+            Livro livro,
+            CreateLivroCommand request,
+            CancellationToken cancellationToken)
+        {
+            if (request.LivroAssuntos is not null && request.LivroAssuntos.Any())
+            {
+                foreach (var assuntoId in request.LivroAssuntos)
+                    await _livroAssuntoRepository.CreateAsync(new LivroAssunto
+                    {
+                        LivroCod = livro.Cod,
+                        AssuntoCodAss = assuntoId
+                    }, cancellationToken);
+
+                await _unitOfWork.CommitAsync(cancellationToken);
             }
         }
     }

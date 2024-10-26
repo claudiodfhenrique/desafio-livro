@@ -4,13 +4,13 @@ using Desafio.Infrastructure.Repository.Interfaces;
 
 namespace Desafio.Infrastructure.Repository
 {
-    public class LivroAutorRepository : RepositoryBase<LivroAutor>, ILivroAutorRepository
+    public class LivroAssuntoRepository : RepositoryBase<LivroAssunto>, ILivroAssuntoRepository
     {
-        public LivroAutorRepository(ApplicationDbContext Context) : base(Context)
+        public LivroAssuntoRepository(ApplicationDbContext Context) : base(Context)
         {
         }
 
-        public async Task<IEnumerable<LivroAutor>> ListByAsync(
+        public async Task<IEnumerable<LivroAssunto>> ListByAsync(
             int livroCod,
             CancellationToken cancellationToken = default
         )

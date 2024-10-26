@@ -2,9 +2,9 @@
 
 namespace Desafio.Infrastructure.Repository.Interfaces
 {
-    public interface ILivroAutorRepository : IRepository<LivroAutor>
+    public interface ILivroAssuntoRepository :  IRepository<LivroAssunto>
     {
-        Task<IEnumerable<LivroAutor>> ListByAsync(
+        Task<IEnumerable<LivroAssunto>> ListByAsync(
             int livroCod,
             CancellationToken cancellationToken = default
         );

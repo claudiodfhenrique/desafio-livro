@@ -7,7 +7,7 @@
         public string Editora { get; set; }
         public int Edicao { get; set; }
         public int AnoPublicacao { get; set; }
-        //public List<LivroAssunto> LivroAssunto { get; set; } = new List<LivroAssunto>();        
+        public virtual ICollection<LivroAssunto> LivroAssunto { get; set; } = new List<LivroAssunto>();        
         public virtual ICollection<LivroAutor> LivroAutor { get; set; } = new List<LivroAutor>();
     }
 }

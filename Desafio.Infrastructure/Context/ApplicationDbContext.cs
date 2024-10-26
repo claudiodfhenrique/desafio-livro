@@ -17,8 +17,8 @@ namespace Desafio.Infrastructure.Context
         public DbSet<Autor> Autor { get; set; }
         public DbSet<Livro> Livro { get; set; }
         public DbSet<LivroAutor> LivroAutor { get; set; }
+        public DbSet<LivroAssunto> LivroAssunto { get; set; }
         public DbSet<VwLivrosPorAutor> VWBoletosVencimentoAnual { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,6 +27,7 @@ namespace Desafio.Infrastructure.Context
             builder.ApplyConfiguration(new AutorConfig());
             builder.ApplyConfiguration(new LivroConfig());
             builder.ApplyConfiguration(new LivroAutorConfig());
+            builder.ApplyConfiguration(new LivroAssuntoConfig());
 
             builder.Entity<VwLivrosPorAutor>()
                 .ToView("VW_LIVROS_POR_AUTOR")

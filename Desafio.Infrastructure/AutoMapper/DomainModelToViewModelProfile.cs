@@ -20,6 +20,8 @@ namespace Desafio.Infrastructure.AutoMapper
             CreateMap<LivroAutor, LivroAutorViewModel>();
 
             CreateMap<VwLivrosPorAutor, VwLivrosPorAutorViewModel>();
+
+            CreateMap<LivroAssunto, LivroAssuntoViewModel>();
         }
     }
 }

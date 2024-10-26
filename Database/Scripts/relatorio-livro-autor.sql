@@ -15,10 +15,10 @@ SELECT
 	A.Descricao AS 'Assunto',
 	Autor.Nome AS 'AutorNome'
 FROM Livro AS L
-	INNER JOIN LivroAssunto AS LA ON L.Cod = LA.Cod
-	INNER JOIN Assunto AS A ON LA.CodAss = A.CodAss
-	INNER JOIN LivroAutor AS LAutor ON L.Cod = LAutor.LivroCod
-	INNER JOIN Autor ON LAutor.AutorCodAu = Autor.CodAu
+	LEFT JOIN LivroAssunto AS LA ON L.Cod = LA.Cod
+	LEFT JOIN Assunto AS A ON LA.CodAss = A.CodAss
+	LEFT JOIN LivroAutor AS LAutor ON L.Cod = LAutor.LivroCod
+	LEFT JOIN Autor ON LAutor.AutorCodAu = Autor.CodAu
 GROUP BY
 	L.Titulo,
 	L.Editora,

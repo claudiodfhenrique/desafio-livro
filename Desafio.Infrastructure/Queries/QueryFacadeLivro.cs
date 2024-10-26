@@ -28,7 +28,9 @@ namespace Desafio.Infrastructure.Queries
         {
             InsertNavigations(
                 nameof(Livro.LivroAutor),
-                $"{nameof(Livro.LivroAutor)}.{nameof(Autor)}"
+                $"{nameof(Livro.LivroAutor)}.{nameof(Autor)}",
+                nameof(Livro.LivroAssunto),
+                $"{nameof(Livro.LivroAssunto)}.{nameof(Assunto)}"
             );
 
             var queryResult = await ListAsync(_ => true, cancellationToken);

@@ -72,6 +72,7 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
 builder.Services.AddScoped<IAssuntoRepository, AssuntoRepository>();
 builder.Services.AddScoped<IAutorRepository, AutorRepository>();
 builder.Services.AddScoped<ILivroRepository, LivroRepository>();
+builder.Services.AddScoped<ILivroAssuntoRepository, LivroAssuntoRepository>();
 builder.Services.AddScoped<ILivroAutorRepository, LivroAutorRepository>();
 builder.Services.AddScoped(typeof(IQueryFacade<>), typeof(QueryFacade<>));
 builder.Services.AddScoped<IQueryFacade<Assunto>, QueryFacadeAssunto>();

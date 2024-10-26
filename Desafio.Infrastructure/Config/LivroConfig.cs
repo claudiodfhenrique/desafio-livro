@@ -19,7 +19,9 @@ namespace Desafio.Infrastructure.Config
                 .IsRequired()
                 .HasMaxLength(100);
 
-            builder.HasMany(x => x.LivroAutor);            
+            builder.HasMany(x => x.LivroAutor);
+
+            builder.HasMany(x => x.LivroAssunto);
 
             base.Configure(builder);
         }
