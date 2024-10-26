@@ -6,7 +6,7 @@
         public string Titulo { get; set; }
         public string Editora { get; set; }
         public int Edicao { get; set; }
-        public short AnoPublicacao { get; set; }
+        public int AnoPublicacao { get; set; }
         public List<Assunto> LivroAssunto { get; set; } = new List<Assunto>();        
         //public List<Autor> Autores { get; set; } = new List<Autor>();
     }

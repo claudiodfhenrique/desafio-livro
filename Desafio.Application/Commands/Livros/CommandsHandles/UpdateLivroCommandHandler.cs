@@ -20,7 +20,19 @@ namespace Desafio.Application.Commands.Livros.CommandsHandles
 
         public async Task<CommandResult> Handle(UpdateLivroCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var livro = await _repository.FirstAsync(f => f.Cod == request.Cod, cancellationToken);
+            if (livro is null)
+                return CommandResult.CompletedError(request.Cod);
+
+            livro.Titulo = request.Titulo;
+            livro.Editora = request.Editora;
+            livro.Edicao = request.Edicao;
+            livro.AnoPublicacao = request.AnoPublicacao;
+
+            await _repository.UpdateAsync(livro, cancellationToken);
+            await _unitOfWork.CommitAsync(cancellationToken);
+
+            return CommandResult.CompletedSuccess(livro.Cod);
         }
     }
 }

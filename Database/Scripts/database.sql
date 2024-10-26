@@ -125,7 +125,7 @@ create table Livro (
    Titulo               varchar(100)          not null,
    Editora              varchar(100)          not null,
    Edicao               int                  not null,
-   AnoPublicacao        smallint             not null,
+   AnoPublicacao        int             not null,
    constraint PK_LIVRO primary key (Cod)
 )
 go
@@ -209,3 +209,4 @@ alter table LivroAutor
    add constraint FK_LIVROAUT_LIVROAUTO_LIVRO foreign key (LivroCod)
       references Livro (Cod)
 go
+

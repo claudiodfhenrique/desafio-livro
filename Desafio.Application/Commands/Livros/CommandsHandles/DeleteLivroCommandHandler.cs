@@ -20,7 +20,14 @@ namespace Desafio.Application.Commands.Livros.CommandsHandles
 
         public async Task<CommandResult> Handle(DeleteLivroCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var livro = await _repository.FirstAsync(f => f.Cod == request.Id, cancellationToken);
+            if (livro is null)
+                return CommandResult.CompletedError(request.Id);
+
+            await _repository.DeleteAsync(livro, cancellationToken);
+            await _unitOfWork.CommitAsync(cancellationToken);
+
+            return CommandResult.CompletedSuccess(request.Id);
         }
     }
 }

@@ -24,21 +24,12 @@ namespace Desafio.Application.Commands.Livros.CommandsHandles
 
         public async Task<CommandResult> Handle(CreateLivroCommand request, CancellationToken cancellationToken)
         {
-            var assunto = await _assuntoRepository.FirstAsync(f => f.CodAss == 2, cancellationToken);
-            var livro = new Livro
+            var livro = new Livro 
             {
-                Titulo = "Título",
-                Editora = "Editora",
-                Edicao = 1,
-                AnoPublicacao = 2,
-                LivroAssunto = new List<Assunto>
-                {
-                    assunto
-                },
-                //LivroAutor = new List<LivroAutor>
-                //{
-                //    new() { AutorCodAu = 2 }
-                //}
+                Titulo = request.Titulo,
+                Editora = request.Editora,
+                Edicao = request.Edicao,
+                AnoPublicacao = request.AnoPublicacao
             };
 
             await _repository.CreateAsync(livro, cancellationToken);
