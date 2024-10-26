@@ -134,9 +134,9 @@ go
 /* Table: LivroAssunto                                          */
 /*==============================================================*/
 create table LivroAssunto (
-   Cod                  int                  not null,
-   CodAss               int                  not null,
-   constraint PK_LIVROASSUNTO primary key (Cod, CodAss)
+   LivroCod                  int                  not null,
+   AssuntoCodAss               int                  not null,
+   constraint PK_LIVROASSUNTO primary key (LivroCod, AssuntoCodAss)
 )
 go
 

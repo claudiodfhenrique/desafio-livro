@@ -15,8 +15,8 @@ SELECT
 	A.Descricao AS 'Assunto',
 	Autor.Nome AS 'AutorNome'
 FROM Livro AS L
-	LEFT JOIN LivroAssunto AS LA ON L.Cod = LA.Cod
-	LEFT JOIN Assunto AS A ON LA.CodAss = A.CodAss
+	LEFT JOIN LivroAssunto AS LA ON L.Cod = LA.LivroCod
+	LEFT JOIN Assunto AS A ON LA.AssuntoCodAss = A.CodAss
 	LEFT JOIN LivroAutor AS LAutor ON L.Cod = LAutor.LivroCod
 	LEFT JOIN Autor ON LAutor.AutorCodAu = Autor.CodAu
 GROUP BY
