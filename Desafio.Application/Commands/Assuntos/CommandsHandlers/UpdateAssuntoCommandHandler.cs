@@ -20,15 +20,15 @@ namespace Desafio.Application.Commands.Assuntos.CommandsHandlers
 
         public async Task<CommandResult> Handle(UpdateAssuntoCommand request, CancellationToken cancellationToken)
         {
-            var assunto = await _repository.FirstAsync(f => f.CodAss == request.Id, cancellationToken);
+            var assunto = await _repository.FirstAsync(f => f.CodAss == request.CodAss, cancellationToken);
             if (assunto is null)
-                return CommandResult.CompletedError(request.Id);
+                return CommandResult.CompletedError(request.CodAss);
 
             assunto.Descricao = request.Descricao;
             await _repository.UpdateAsync(assunto, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            return CommandResult.CompletedSuccess(request.Id);
+            return CommandResult.CompletedSuccess(request.CodAss);
         }
     }
 }

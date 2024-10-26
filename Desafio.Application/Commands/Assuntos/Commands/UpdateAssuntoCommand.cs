@@ -2,6 +2,6 @@
 {
     public sealed class UpdateAssuntoCommand : AssuntoCommand
     {
-        public int Id { get; init; }
+        public int CodAss { get; init; }
     }
 }

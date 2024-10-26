@@ -17,6 +17,7 @@ using Desafio.Domain.Entities;
 using Desafio.Application.Commands.Assuntos.CommandsHandlers;
 using Desafio.Application.Commands.Assuntos.Validators;
 using Desafio.Infrastructure.AutoMapper;
+using Microsoft.AspNetCore.Cors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,17 @@ builder.Services.AddSwaggerGen(c =>
         c.IncludeXmlComments(d);
     });
 });
+
+builder.Services.AddCors(p => p.AddPolicy("CORS", builder =>
+{
+    builder
+        .WithOrigins("http://localhost:4200")
+        .SetIsOriginAllowedToAllowWildcardSubdomains()
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials()
+        .WithExposedHeaders("Access-Control-Allow-Origin");
+}));
 
 builder.Services.AddDbContext<ApplicationDbContext>((provider, options) =>
 {    
@@ -85,7 +97,9 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+
+app.UseCors("CORS");
 
 app.UseAuthorization();
 

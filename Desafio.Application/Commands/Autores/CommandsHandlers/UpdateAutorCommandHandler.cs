@@ -20,9 +20,9 @@ namespace Desafio.Application.Commands.Autores.CommandsHandlers
 
         public async Task<CommandResult> Handle(UpdateAutorCommand request, CancellationToken cancellationToken)
         {
-            var assunto = await _repository.FirstAsync(f => f.CodAu == request.Id, cancellationToken);
+            var assunto = await _repository.FirstAsync(f => f.CodAu == request.CodAu, cancellationToken);
             if (assunto is null)
-                return CommandResult.CompletedError(request.Id);
+                return CommandResult.CompletedError(request.CodAu);
 
             assunto.Nome = request.Nome;
             await _repository.UpdateAsync(assunto, cancellationToken);

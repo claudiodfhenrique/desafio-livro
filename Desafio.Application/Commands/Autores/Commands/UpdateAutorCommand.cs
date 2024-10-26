@@ -2,6 +2,6 @@
 {
     public sealed class UpdateAutorCommand : AutorCommand
     {
-        public int Id { get; init; }
+        public int CodAu { get; init; }
     }
 }

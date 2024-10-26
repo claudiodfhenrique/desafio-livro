@@ -22,7 +22,7 @@ namespace Desafio.API.Controllers
         /// <response code="200">Registro recuperado com sucesso.</response>        
         /// <response code="404">Dados recupetado com sucesso.</response>
         [HttpGet()]
-        [ProducesResponseType(typeof(IEnumerable<AssuntoViewModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<VwLivrosPorAutorViewModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> All()
         {
